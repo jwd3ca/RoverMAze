@@ -1,5 +1,5 @@
-// MyRunningRoverC.ino Improvement on the example code
-//roverc.setSpeed(int8_t x, int8_t y, int8_t z) (x,y and z axis)
+// RoverMAze.ino
+// attempt to solve a maze
 
 
 /* pseudo code:
