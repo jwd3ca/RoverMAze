@@ -1,5 +1,5 @@
 // RoverMAze.ino
-// attempt to solve a maze
+// Use RoverC to attempt to solve a maze
 
 
 /* pseudo code:
