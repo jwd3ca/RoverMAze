@@ -111,15 +111,15 @@ void loop() {
   // three_step(left_angle, forward_angle, right_angle);
 
   roverc.setServoAngle(1, forward_angle);  // rotate the motor counter-clockwise
-  delay(1000);
+  delay(1000); // neccessary!
   Serial.println("\nlooking forward()");
 
-  fd = 200;
+  fd = 200;  // neccessary!
   while (fd > stop_distance) {
     forward();
     fd = sonar.ping_cm();
     Serial.printf("fd: %d\n", fd);
-    delay(500);
+    delay(100);
   }
 
   Serial.printf("\n\nSTOPPING - fd(%d) < stop_distance(%d)\\nn", fd, stop_distance);
@@ -131,14 +131,13 @@ void loop() {
 
   // update_sprite(fd, 20, 20);
   // sprite.pushSprite(0, 0);  // Once per frame only, raw the sprite covering the whole screen
-  // delay(1000);
+  delay(1000);
 
   rd = look_right();
   // Add a delay before the next action
   MyDelay.start(1000);
   while (!MyDelay.justFinished()) {
   }
-  // Serial.println("3 seconds have elapsed!");
 
   ld = look_left();
   // Add a delay before the next action
@@ -205,34 +204,6 @@ void show_volts() {
 }
 
 //-----------------------------------------------------------------------------------
-void turn_left() {
-  // NOTE: the accuracy of the turn depends on topspeed, turnDuration and surface traction
-  // 50 and 200 work well on my desk
-
-  // Start the left turn
-  roverc.setSpeed(0, 0, -topspeed);  // left turn
-  MyDelay.start(200);
-  while (!MyDelay.justFinished()) {
-    ;
-  }
-  roverc.setSpeed(0, 0, 0);  // stop
-}
-
-//-----------------------------------------------------------------------------------
-void turn_right() {
-  // NOTE: the accuracy of the turn depends on topspeed, turnDuration and surface traction
-  // 50 and 200 work well on my desk
-
-  // Start the right turn
-  roverc.setSpeed(0, 0, topspeed);  // right turn
-  MyDelay.start(200);
-  while (!MyDelay.justFinished()) {
-    ;
-  }
-  roverc.setSpeed(0, 0, 0);  // stop
-}
-
-//-----------------------------------------------------------------------------------
 void forward() {
   roverc.setSpeed(0, topspeed, 0);
 }
@@ -284,23 +255,6 @@ int look_right() {
 
   sprite.pushSprite(0, 0);  // Once per frame only, raw the sprite covering the whole screen
   return (rd);
-}
-
-//------------------------------------------------------------
-int look_forward() {
-  Serial.println("\nin looking forward()");
-
-  roverc.setServoAngle(1, forward_angle);  // rotate the motor counter-clockwise
-  delay(1000);
-  fd = sonar.ping_cm();
-  Serial.printf("fd: %d\n", fd);
-
-  sprite.fillSprite(TFT_BLACK);  // Clear once per frame
-  update_sprite(fd, 20, 20);
-  show_volts();
-  sprite.pushSprite(0, 0);  // Once per frame only, raw the sprite covering the whole screen
-  delay(1000);
-  return (fd);
 }
 
 //------------------------------------------------------------
